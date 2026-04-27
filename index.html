@@ -79,6 +79,34 @@
     /* Petal decoration */
     .petal { opacity: 0.18; border-radius: 50% 20% 50% 20%; }
 
+    /* Audio player range styling */
+    #progress {
+      -webkit-appearance: none;
+      appearance: none;
+      height: 6px;
+      border-radius: 3px;
+      outline: none;
+      cursor: pointer;
+    }
+    #progress::-webkit-slider-thumb {
+      -webkit-appearance: none;
+      appearance: none;
+      width: 14px;
+      height: 14px;
+      border-radius: 50%;
+      background: #C9A45C;
+      cursor: pointer;
+      box-shadow: 0 1px 4px rgba(24,61,52,0.2);
+    }
+    #progress::-moz-range-thumb {
+      width: 14px;
+      height: 14px;
+      border-radius: 50%;
+      background: #C9A45C;
+      cursor: pointer;
+      border: none;
+    }
+
     @media (max-width: 640px) {
       h1 { font-size: 2.2rem !important; line-height: 1.15 !important; }
       h2 { font-size: 1.8rem !important; }
@@ -279,6 +307,31 @@
         Сколько мне идти Свой путь?<br/>
         И в развилке где свернуть?»
       </blockquote>
+
+      <!-- ====== AUDIO PLAYER ====== -->
+      <div class="mt-8 flex flex-col items-center gap-3">
+        <audio id="meditation-audio" src="Vidimost.mp3" preload="metadata"></audio>
+        <div class="flex items-center gap-4 w-full max-w-sm">
+          <!-- Play/Pause button -->
+          <button onclick="togglePlay()" id="play-btn"
+            class="flex-shrink-0 w-11 h-11 rounded-full bg-forest text-cream flex items-center justify-center shadow-md hover:bg-burgundy transition-colors duration-200"
+            aria-label="Воспроизвести">
+            <svg id="icon-play" xmlns="http://www.w3.org/2000/svg" class="w-5 h-5" viewBox="0 0 24 24" fill="currentColor"><path d="M8 5v14l11-7z"/></svg>
+            <svg id="icon-pause" xmlns="http://www.w3.org/2000/svg" class="w-5 h-5 hidden" viewBox="0 0 24 24" fill="currentColor"><path d="M6 19h4V5H6v14zm8-14v14h4V5h-4z"/></svg>
+          </button>
+          <!-- Progress + time -->
+          <div class="flex-1 flex flex-col gap-1.5">
+            <input id="progress" type="range" value="0" min="0" step="0.01"
+              class="w-full cursor-pointer" style="background:linear-gradient(to right,#C9A45C 0%,#E6D1CA 0%);" />
+            <div class="flex justify-between text-xs font-sans font-light text-forest/45">
+              <span id="time-current">0:00</span>
+              <span id="time-total">0:00</span>
+            </div>
+          </div>
+        </div>
+      </div>
+      <!-- ====== END AUDIO PLAYER ====== -->
+
       <p class="mt-6 text-xs font-sans font-light text-forest/45 italic">Фрагмент из реальной медитации</p>
       <div class="absolute bottom-0 right-0 w-full h-1 bg-gradient-to-r from-transparent via-rose to-transparent opacity-40"></div>
     </div>
@@ -717,24 +770,65 @@
     const body = btn.nextElementSibling;
     const arrow = btn.querySelector('.faq-arrow');
     const isOpen = body.classList.contains('open');
-    // Close all
     document.querySelectorAll('.faq-body.open').forEach(b => b.classList.remove('open'));
     document.querySelectorAll('.faq-arrow.open').forEach(a => a.classList.remove('open'));
-    // Open clicked
     if (!isOpen) {
       body.classList.add('open');
       arrow.classList.add('open');
     }
   }
 
-  // Hide hero fallback if image loads
-  const heroImg = document.querySelector('[alt="Образ медитации — закрытые глаза"]');
-  if (heroImg) {
-    heroImg.addEventListener('load', () => {
-      const fallback = document.getElementById('hero-fallback');
-      if (fallback) fallback.style.display = 'none';
-    });
+  // ====== AUDIO PLAYER ======
+  const audio = document.getElementById('meditation-audio');
+  const progressEl = document.getElementById('progress');
+  const timeCurrent = document.getElementById('time-current');
+  const timeTotal = document.getElementById('time-total');
+  const iconPlay = document.getElementById('icon-play');
+  const iconPause = document.getElementById('icon-pause');
+
+  function formatTime(s) {
+    const m = Math.floor(s / 60);
+    const sec = Math.floor(s % 60);
+    return m + ':' + (sec < 10 ? '0' : '') + sec;
   }
+
+  function togglePlay() {
+    if (audio.paused) {
+      audio.play();
+      iconPlay.classList.add('hidden');
+      iconPause.classList.remove('hidden');
+    } else {
+      audio.pause();
+      iconPlay.classList.remove('hidden');
+      iconPause.classList.add('hidden');
+    }
+  }
+
+  audio.addEventListener('loadedmetadata', () => {
+    progressEl.max = audio.duration;
+    timeTotal.textContent = formatTime(audio.duration);
+  });
+
+  audio.addEventListener('timeupdate', () => {
+    progressEl.value = audio.currentTime;
+    timeCurrent.textContent = formatTime(audio.currentTime);
+    // Update fill color
+    const pct = (audio.currentTime / audio.duration) * 100 || 0;
+    progressEl.style.background = `linear-gradient(to right, #C9A45C ${pct}%, #E6D1CA ${pct}%)`;
+  });
+
+  progressEl.addEventListener('input', () => {
+    audio.currentTime = progressEl.value;
+  });
+
+  audio.addEventListener('ended', () => {
+    iconPlay.classList.remove('hidden');
+    iconPause.classList.add('hidden');
+    progressEl.value = 0;
+    timeCurrent.textContent = '0:00';
+    progressEl.style.background = 'linear-gradient(to right, #C9A45C 0%, #E6D1CA 0%)';
+  });
+  // ====== END AUDIO PLAYER ======
 </script>
 </body>
 </html>
