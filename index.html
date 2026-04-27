@@ -1,89 +1,89 @@
 <!DOCTYPE html>
 <html lang="ru">
 <head>
-<meta charset="UTF-8" />
-<meta name="viewport" content="width=device-width, initial-scale=1.0" />
-<title>LightSoulTalk — Стихотворные медитации под запрос</title>
-<script src="https://cdn.tailwindcss.com"></script>
-<link rel="preconnect" href="https://fonts.googleapis.com" />
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400;1,500&family=Jost:wght@300;400;500&display=swap" rel="stylesheet" />
-<script>
-  tailwind.config = {
-    theme: {
-      extend: {
-        colors: {
-          cream:   '#F7EFE6',
-          forest:  '#183D34',
-          burgundy:'#7A2636',
-          rose:    '#C98C9B',
-          blue:    '#3C5F78',
-          gold:    '#C9A45C',
-          blush:   '#E6D1CA',
-          'cream-dark': '#EEE0D3',
-        },
-        fontFamily: {
-          serif: ['Cormorant Garamond', 'Georgia', 'serif'],
-          sans:  ['Jost', 'sans-serif'],
-        },
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>LightSoulTalk — Стихотворные медитации под запрос</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400;1,500&family=Jost:wght@300;400;500&display=swap" rel="stylesheet" />
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            cream:   '#F7EFE6',
+            forest:  '#183D34',
+            burgundy:'#7A2636',
+            rose:    '#C98C9B',
+            blue:    '#3C5F78',
+            gold:    '#C9A45C',
+            blush:   '#E6D1CA',
+            'cream-dark': '#EEE0D3',
+          },
+          fontFamily: {
+            serif: ['Cormorant Garamond', 'Georgia', 'serif'],
+            sans:  ['Jost', 'sans-serif'],
+          },
+        }
       }
     }
-  }
-</script>
-<style>
-  html { scroll-behavior: smooth; }
-  body { background-color: #F7EFE6; color: #183D34; font-family: 'Jost', sans-serif; }
+  </script>
+  <style>
+    html { scroll-behavior: smooth; }
+    body { background-color: #F7EFE6; color: #183D34; font-family: 'Jost', sans-serif; }
 
-  /* Decorative blobs */
-  .blob { border-radius: 60% 40% 70% 30% / 50% 60% 40% 50%; }
+    /* Decorative blobs */
+    .blob { border-radius: 60% 40% 70% 30% / 50% 60% 40% 50%; }
 
-  /* Sticky header */
-  #header { position: sticky; top: 0; z-index: 50; }
+    /* Sticky header */
+    #header { position: sticky; top: 0; z-index: 50; }
 
-  /* Fade-in on scroll */
-  .reveal { opacity: 0; transform: translateY(28px); transition: opacity 0.7s ease, transform 0.7s ease; }
-  .reveal.visible { opacity: 1; transform: none; }
+    /* Fade-in on scroll */
+    .reveal { opacity: 0; transform: translateY(28px); transition: opacity 0.7s ease, transform 0.7s ease; }
+    .reveal.visible { opacity: 1; transform: none; }
 
-  /* Quote strip marquee */
-  .marquee-track { display: flex; gap: 3rem; animation: marquee 22s linear infinite; white-space: nowrap; }
-  @keyframes marquee { from { transform: translateX(0); } to { transform: translateX(-50%); } }
+    /* Quote strip marquee */
+    .marquee-track { display: flex; gap: 3rem; animation: marquee 22s linear infinite; white-space: nowrap; }
+    @keyframes marquee { from { transform: translateX(0); } to { transform: translateX(-50%); } }
 
-  /* Timeline line */
-  .timeline-line { position: absolute; left: 20px; top: 0; bottom: 0; width: 2px; background: linear-gradient(to bottom, #C9A45C, #C98C9B); }
+    /* Timeline line */
+    .timeline-line { position: absolute; left: 20px; top: 0; bottom: 0; width: 2px; background: linear-gradient(to bottom, #C9A45C, #C98C9B); }
 
-  /* Accordion */
-  .faq-body { max-height: 0; overflow: hidden; transition: max-height 0.4s ease, padding 0.3s; }
-  .faq-body.open { max-height: 300px; }
-  .faq-arrow { transition: transform 0.3s; }
-  .faq-arrow.open { transform: rotate(180deg); }
+    /* Accordion */
+    .faq-body { max-height: 0; overflow: hidden; transition: max-height 0.4s ease, padding 0.3s; }
+    .faq-body.open { max-height: 300px; }
+    .faq-arrow { transition: transform 0.3s; }
+    .faq-arrow.open { transform: rotate(180deg); }
 
-  /* Eye-flower SVG placeholder style */
-  .eye-circle { border-radius: 50%; background: linear-gradient(135deg, #C98C9B 0%, #E6D1CA 40%, #C9A45C 100%); }
+    /* Eye-flower SVG placeholder style */
+    .eye-circle { border-radius: 50%; background: linear-gradient(135deg, #C98C9B 0%, #E6D1CA 40%, #C9A45C 100%); }
 
-  /* Card hover */
-  .card-hover { transition: transform 0.25s ease, box-shadow 0.25s ease; }
-  .card-hover:hover { transform: translateY(-4px); box-shadow: 0 16px 40px rgba(24,61,52,0.12); }
+    /* Card hover */
+    .card-hover { transition: transform 0.25s ease, box-shadow 0.25s ease; }
+    .card-hover:hover { transform: translateY(-4px); box-shadow: 0 16px 40px rgba(24,61,52,0.12); }
 
-  /* Button transitions */
-  .btn-primary { transition: background 0.2s, transform 0.15s, box-shadow 0.2s; }
-  .btn-primary:hover { transform: translateY(-2px); box-shadow: 0 8px 24px rgba(24,61,52,0.2); }
-  .btn-secondary { transition: background 0.2s, transform 0.15s, color 0.2s; }
-  .btn-secondary:hover { background: #C98C9B; color: #fff; transform: translateY(-2px); }
+    /* Button transitions */
+    .btn-primary { transition: background 0.2s, transform 0.15s, box-shadow 0.2s; }
+    .btn-primary:hover { transform: translateY(-2px); box-shadow: 0 8px 24px rgba(24,61,52,0.2); }
+    .btn-secondary { transition: background 0.2s, transform 0.15s, color 0.2s; }
+    .btn-secondary:hover { background: #C98C9B; color: #fff; transform: translateY(-2px); }
 
-  /* Phone frame */
-  .phone-frame { border-radius: 2rem; border: 3px solid #E6D1CA; box-shadow: 0 8px 32px rgba(24,61,52,0.1); }
+    /* Phone frame */
+    .phone-frame { border-radius: 2rem; border: 3px solid #E6D1CA; box-shadow: 0 8px 32px rgba(24,61,52,0.1); }
 
-  /* Section divider */
-  .divider { width: 48px; height: 2px; background: linear-gradient(to right, #C9A45C, #C98C9B); border-radius: 2px; margin: 0 auto; }
+    /* Section divider */
+    .divider { width: 48px; height: 2px; background: linear-gradient(to right, #C9A45C, #C98C9B); border-radius: 2px; margin: 0 auto; }
 
-  /* Petal decoration */
-  .petal { opacity: 0.18; border-radius: 50% 20% 50% 20%; }
+    /* Petal decoration */
+    .petal { opacity: 0.18; border-radius: 50% 20% 50% 20%; }
 
-  @media (max-width: 640px) {
-    h1 { font-size: 2.2rem !important; line-height: 1.15 !important; }
-    h2 { font-size: 1.8rem !important; }
-  }
-</style>
+    @media (max-width: 640px) {
+      h1 { font-size: 2.2rem !important; line-height: 1.15 !important; }
+      h2 { font-size: 1.8rem !important; }
+    }
+  </style>
 </head>
 <body class="overflow-x-hidden">
 
@@ -692,7 +692,7 @@
     </a>
   </div>
   <div class="text-center mt-8">
-    <p class="font-sans text-xs text-forest/30 font-light">© 2025 LightSoulTalk · Настя Цветкова</p>
+    <p class="font-sans text-xs text-forest/30 font-light">© 2026 LightSoulTalk · Настя Цветкова</p>
   </div>
 </footer>
 
