@@ -161,8 +161,95 @@
     /* Petal */
     .petal { opacity: 0.22; border-radius: 50% 20% 50% 20%; }
 
-    /* Phone frame */
-    .phone-frame { border-radius: 2rem; border: 3px solid rgba(230,209,202,0.5); box-shadow: 0 8px 32px rgba(0,0,0,0.3); }
+    /* Reviews: одинаковые окошки с внутренним скроллом */
+    .reviews-row {
+      display: flex;
+      gap: 1.5rem;
+      overflow-x: auto;
+      padding: 0.25rem 1rem 1.25rem;
+      scroll-snap-type: x mandatory;
+      -webkit-overflow-scrolling: touch;
+    }
+
+    .reviews-row::-webkit-scrollbar {
+      height: 8px;
+    }
+
+    .reviews-row::-webkit-scrollbar-track {
+      background: rgba(247,239,230,0.14);
+      border-radius: 999px;
+    }
+
+    .reviews-row::-webkit-scrollbar-thumb {
+      background: rgba(201,164,92,0.65);
+      border-radius: 999px;
+    }
+
+    .phone-frame {
+      position: relative;
+      flex: 0 0 280px;
+      height: 440px;
+      overflow: hidden;
+      border-radius: 2rem;
+      border: 3px solid rgba(230,209,202,0.55);
+      background: rgba(24,61,52,0.72);
+      box-shadow: 0 8px 32px rgba(0,0,0,0.3);
+      scroll-snap-align: center;
+    }
+
+    .review-window {
+      height: 100%;
+      overflow-y: auto;
+      overflow-x: hidden;
+      border-radius: 1.78rem;
+      background: #9fc28f;
+      overscroll-behavior: contain;
+      scrollbar-width: thin;
+      scrollbar-color: rgba(24,61,52,0.35) transparent;
+    }
+
+    .review-window::-webkit-scrollbar {
+      width: 6px;
+    }
+
+    .review-window::-webkit-scrollbar-track {
+      background: transparent;
+    }
+
+    .review-window::-webkit-scrollbar-thumb {
+      background: rgba(24,61,52,0.35);
+      border-radius: 999px;
+    }
+
+    .review-window img {
+      display: block;
+      width: 100%;
+      height: auto;
+    }
+
+    @media (min-width: 640px) {
+      .phone-frame {
+        flex-basis: 300px;
+        height: 460px;
+      }
+    }
+
+    @media (min-width: 1024px) {
+      .reviews-row {
+        display: grid;
+        grid-template-columns: repeat(3, minmax(0, 1fr));
+        overflow: visible;
+        padding: 0;
+      }
+
+      .phone-frame {
+        width: 100%;
+        max-width: 340px;
+        height: 480px;
+        margin-left: auto;
+        margin-right: auto;
+      }
+    }
 
     /* Eye circle */
     .eye-circle { border-radius: 50%; background: linear-gradient(135deg, #C98C9B, #E6D1CA 50%, #C9A45C); }
@@ -610,81 +697,85 @@
       <h2 class="font-serif font-light text-cream text-4xl lg:text-5xl drop-shadow-lg">
         Как это проживают<br/><em class="text-gold">другие женщины</em>
       </h2>
+      <p class="font-sans font-light text-cream/75 text-base leading-relaxed mt-5 max-w-2xl mx-auto">
+        Живые сообщения после прослушивания медитаций и сказок. Все окошки одинаковой высоты: если отзыв длинный, его можно прокрутить внутри карточки.
+      </p>
     </div>
-    <div class="grid sm:grid-cols-2 lg:grid-cols-3 gap-8 reveal">
-      <div class="flex flex-col items-center gap-4">
-        <div class="phone-frame w-full max-w-xs overflow-hidden" style="min-height:220px;background:rgba(247,239,230,0.7);">
-          <img src="assets/review-1.jpg" alt="Отзыв 1" class="w-full object-cover" onerror="this.style.display='none'"/>
-          <div class="p-5 flex items-end h-full min-h-48">
-            <div class="bg-white/70 backdrop-blur-sm rounded-xl px-4 py-3 w-full">
-              <div class="flex gap-1 mb-1">⭐⭐⭐⭐⭐</div>
-              <p class="font-sans text-xs text-forest/70">Отзыв в мессенджере</p>
-            </div>
-          </div>
-        </div>
-        <p class="font-serif italic text-cream text-lg text-center drop-shadow">«Попадание в самое сердце»</p>
-      </div>
-      <div class="flex flex-col items-center gap-4">
-        <div class="phone-frame w-full max-w-xs overflow-hidden" style="min-height:220px;background:rgba(247,239,230,0.7);">
-          <img src="assets/review-2.jpg" alt="Отзыв 2" class="w-full object-cover" onerror="this.style.display='none'"/>
-          <div class="p-5 flex items-end h-full min-h-48">
-            <div class="bg-white/70 backdrop-blur-sm rounded-xl px-4 py-3 w-full">
-              <div class="flex gap-1 mb-1">⭐⭐⭐⭐⭐</div>
-              <p class="font-sans text-xs text-forest/70">Отзыв в мессенджере</p>
-            </div>
-          </div>
-        </div>
-        <p class="font-serif italic text-cream text-lg text-center drop-shadow">«Я слушала и плакала»</p>
-      </div>
-      <div class="flex flex-col items-center gap-4">
-        <div class="phone-frame w-full max-w-xs overflow-hidden" style="min-height:220px;background:rgba(247,239,230,0.7);">
-          <img src="assets/review-3.jpg" alt="Отзыв 3" class="w-full object-cover" onerror="this.style.display='none'"/>
-          <div class="p-5 flex items-end h-full min-h-48">
-            <div class="bg-white/70 backdrop-blur-sm rounded-xl px-4 py-3 w-full">
-              <div class="flex gap-1 mb-1">⭐⭐⭐⭐⭐</div>
-              <p class="font-sans text-xs text-forest/70">Отзыв в мессенджере</p>
-            </div>
-          </div>
-        </div>
-        <p class="font-serif italic text-cream text-lg text-center drop-shadow">«Как будто меня кто-то обнимает»</p>
-      </div>
-      <div class="flex flex-col items-center gap-4">
-        <div class="phone-frame w-full max-w-xs overflow-hidden" style="min-height:220px;background:rgba(247,239,230,0.7);">
-          <img src="assets/review-4.jpg" alt="Отзыв 4" class="w-full object-cover" onerror="this.style.display='none'"/>
-          <div class="p-5 flex items-end h-full min-h-48">
-            <div class="bg-white/70 backdrop-blur-sm rounded-xl px-4 py-3 w-full">
-              <div class="flex gap-1 mb-1">⭐⭐⭐⭐⭐</div>
-              <p class="font-sans text-xs text-forest/70">Отзыв в мессенджере</p>
-            </div>
+
+    <div class="reviews-row reveal">
+      <article class="flex flex-col items-center gap-4">
+        <div class="phone-frame">
+          <div class="review-window">
+            <img src="assets/review-1.png" alt="Отзыв 1" />
           </div>
         </div>
         <p class="font-serif italic text-cream text-lg text-center drop-shadow">«Это просто волшебство»</p>
-      </div>
-      <div class="flex flex-col items-center gap-4">
-        <div class="phone-frame w-full max-w-xs overflow-hidden" style="min-height:220px;background:rgba(247,239,230,0.7);">
-          <img src="assets/review-5.jpg" alt="Отзыв 5" class="w-full object-cover" onerror="this.style.display='none'"/>
-          <div class="p-5 flex items-end h-full min-h-48">
-            <div class="bg-white/70 backdrop-blur-sm rounded-xl px-4 py-3 w-full">
-              <div class="flex gap-1 mb-1">⭐⭐⭐⭐⭐</div>
-              <p class="font-sans text-xs text-forest/70">Отзыв в мессенджере</p>
-            </div>
+      </article>
+
+      <article class="flex flex-col items-center gap-4">
+        <div class="phone-frame">
+          <div class="review-window">
+            <img src="assets/review-2.png" alt="Отзыв 2" />
           </div>
         </div>
-        <p class="font-serif italic text-cream text-lg text-center drop-shadow">«Буду слушать каждый день»</p>
-      </div>
-      <div class="flex flex-col items-center gap-4">
-        <div class="phone-frame w-full max-w-xs overflow-hidden" style="min-height:220px;background:rgba(247,239,230,0.7);">
-          <img src="assets/review-6.jpg" alt="Отзыв 6" class="w-full object-cover" onerror="this.style.display='none'"/>
-          <div class="p-5 flex items-end h-full min-h-48">
-            <div class="bg-white/70 backdrop-blur-sm rounded-xl px-4 py-3 w-full">
-              <div class="flex gap-1 mb-1">⭐⭐⭐⭐⭐</div>
-              <p class="font-sans text-xs text-forest/70">Отзыв в мессенджере</p>
-            </div>
+        <p class="font-serif italic text-cream text-lg text-center drop-shadow">«Как будто меня кто-то обнимает»</p>
+      </article>
+
+      <article class="flex flex-col items-center gap-4">
+        <div class="phone-frame">
+          <div class="review-window">
+            <img src="assets/review-3.png" alt="Отзыв 3" />
           </div>
         </div>
-        <p class="font-serif italic text-cream text-lg text-center drop-shadow">«Ты попала в самую суть»</p>
-      </div>
+        <p class="font-serif italic text-cream text-lg text-center drop-shadow">«Космос каждую секунду»</p>
+      </article>
+
+      <article class="flex flex-col items-center gap-4">
+        <div class="phone-frame">
+          <div class="review-window">
+            <img src="assets/review-4.png" alt="Отзыв 4" />
+          </div>
+        </div>
+        <p class="font-serif italic text-cream text-lg text-center drop-shadow">«Слушаю и работаю»</p>
+      </article>
+
+      <article class="flex flex-col items-center gap-4">
+        <div class="phone-frame">
+          <div class="review-window">
+            <img src="assets/review-5.png" alt="Отзыв 5" />
+          </div>
+        </div>
+        <p class="font-serif italic text-cream text-lg text-center drop-shadow">«Попала в самую суть»</p>
+      </article>
+
+      <article class="flex flex-col items-center gap-4">
+        <div class="phone-frame">
+          <div class="review-window">
+            <img src="assets/review-6.png" alt="Отзыв 6" />
+          </div>
+        </div>
+        <p class="font-serif italic text-cream text-lg text-center drop-shadow">«И всё как нужно»</p>
+      </article>
+
+      <article class="flex flex-col items-center gap-4">
+        <div class="phone-frame">
+          <div class="review-window">
+            <img src="assets/review-7.png" alt="Отзыв 7" />
+          </div>
+        </div>
+        <p class="font-serif italic text-cream text-lg text-center drop-shadow">«Лис сам найдёт»</p>
+      </article>
+
+      <article class="flex flex-col items-center gap-4">
+        <div class="phone-frame">
+          <div class="review-window">
+            <img src="assets/review-8.png" alt="Отзыв 8" />
+          </div>
+        </div>
+        <p class="font-serif italic text-cream text-lg text-center drop-shadow">«Очень древнее и сильное»</p>
+      </article>
     </div>
+
     <div class="text-center mt-14 reveal">
       <a href="https://docs.google.com/forms/d/e/1FAIpQLSdoc5ghpCXFmpZeyU1r0sF1YUnmNtxGoTqiXsOxiKTeG8VSsQ/viewform?usp=header"
          target="_blank"
@@ -694,6 +785,7 @@
     </div>
   </div>
 </section>
+
 
 <!-- ===================== PAYMENT ===================== -->
 <section class="relative py-20 px-4">
