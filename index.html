@@ -161,18 +161,29 @@
     /* Petal */
     .petal { opacity: 0.22; border-radius: 50% 20% 50% 20%; }
 
-    /* Reviews: одинаковые окошки с внутренним скроллом */
+    /* Reviews: mobile-first carousel + equal windows */
     .reviews-row {
       display: flex;
-      gap: 1.5rem;
+      gap: 1rem;
       overflow-x: auto;
-      padding: 0.25rem 1rem 1.25rem;
+      overflow-y: visible;
+      padding: 0.25rem 1rem 1.35rem;
+      margin-left: -1rem;
+      margin-right: -1rem;
       scroll-snap-type: x mandatory;
+      scroll-padding-left: 1rem;
       -webkit-overflow-scrolling: touch;
+      overscroll-behavior-x: contain;
+    }
+
+    .reviews-row > article {
+      flex: 0 0 min(86vw, 320px);
+      width: min(86vw, 320px);
+      scroll-snap-align: center;
     }
 
     .reviews-row::-webkit-scrollbar {
-      height: 8px;
+      height: 6px;
     }
 
     .reviews-row::-webkit-scrollbar-track {
@@ -181,35 +192,35 @@
     }
 
     .reviews-row::-webkit-scrollbar-thumb {
-      background: rgba(201,164,92,0.65);
+      background: rgba(201,164,92,0.68);
       border-radius: 999px;
     }
 
     .phone-frame {
       position: relative;
-      flex: 0 0 280px;
-      height: 440px;
+      width: 100%;
+      height: clamp(390px, 68vh, 500px);
       overflow: hidden;
-      border-radius: 2rem;
+      border-radius: 1.65rem;
       border: 3px solid rgba(230,209,202,0.55);
       background: rgba(24,61,52,0.72);
       box-shadow: 0 8px 32px rgba(0,0,0,0.3);
-      scroll-snap-align: center;
     }
 
     .review-window {
       height: 100%;
       overflow-y: auto;
       overflow-x: hidden;
-      border-radius: 1.78rem;
+      border-radius: 1.45rem;
       background: #9fc28f;
       overscroll-behavior: contain;
       scrollbar-width: thin;
       scrollbar-color: rgba(24,61,52,0.35) transparent;
+      touch-action: pan-y;
     }
 
     .review-window::-webkit-scrollbar {
-      width: 6px;
+      width: 5px;
     }
 
     .review-window::-webkit-scrollbar-track {
@@ -227,10 +238,55 @@
       height: auto;
     }
 
+    .review-caption {
+      max-width: min(86vw, 320px);
+      min-height: 3rem;
+      padding: 0 .25rem;
+      line-height: 1.15;
+    }
+
+    @media (max-width: 639px) {
+      #reviews {
+        padding-left: 1rem;
+        padding-right: 1rem;
+      }
+
+      #reviews h2 {
+        font-size: 2.15rem !important;
+        line-height: 1.05 !important;
+      }
+
+      #reviews .divider {
+        margin-bottom: 1.25rem;
+      }
+
+      #reviews .reviews-row {
+        gap: 1.15rem;
+      }
+    }
+
     @media (min-width: 640px) {
+      .reviews-row {
+        gap: 1.25rem;
+        margin-left: -1.5rem;
+        margin-right: -1.5rem;
+        padding-left: 1.5rem;
+        padding-right: 1.5rem;
+        scroll-padding-left: 1.5rem;
+      }
+
+      .reviews-row > article {
+        flex-basis: 310px;
+        width: 310px;
+      }
+
       .phone-frame {
-        flex-basis: 300px;
         height: 460px;
+        border-radius: 1.85rem;
+      }
+
+      .review-window {
+        border-radius: 1.65rem;
       }
     }
 
@@ -238,16 +294,27 @@
       .reviews-row {
         display: grid;
         grid-template-columns: repeat(3, minmax(0, 1fr));
+        gap: 2rem;
         overflow: visible;
+        margin-left: 0;
+        margin-right: 0;
         padding: 0;
       }
 
-      .phone-frame {
+      .reviews-row > article {
         width: 100%;
         max-width: 340px;
-        height: 480px;
+        flex-basis: auto;
         margin-left: auto;
         margin-right: auto;
+      }
+
+      .phone-frame {
+        height: 480px;
+      }
+
+      .review-caption {
+        max-width: 340px;
       }
     }
 
@@ -702,7 +769,7 @@
             <img src="assets/review-1.png" alt="Отзыв: это просто волшебство" />
           </div>
         </div>
-        <p class="font-serif italic text-cream text-lg text-center drop-shadow">«Это просто волшебство»</p>
+        <p class="review-caption font-serif italic text-cream text-lg text-center drop-shadow">«Это просто волшебство»</p>
       </article>
 
       <article class="flex flex-col items-center gap-4">
@@ -711,7 +778,7 @@
             <img src="assets/review-2.png" alt="Отзыв: ты попала в самую суть" />
           </div>
         </div>
-        <p class="font-serif italic text-cream text-lg text-center drop-shadow">«Ты попала в самую суть»</p>
+        <p class="review-caption font-serif italic text-cream text-lg text-center drop-shadow">«Ты попала в самую суть»</p>
       </article>
 
       <article class="flex flex-col items-center gap-4">
@@ -720,7 +787,7 @@
             <img src="assets/review-3.png" alt="Отзыв: как будто меня кто-то обнимает" />
           </div>
         </div>
-        <p class="font-serif italic text-cream text-lg text-center drop-shadow">«Как будто меня кто-то обнимает»</p>
+        <p class="review-caption font-serif italic text-cream text-lg text-center drop-shadow">«Как будто меня кто-то обнимает»</p>
       </article>
 
       <article class="flex flex-col items-center gap-4">
@@ -729,7 +796,7 @@
             <img src="assets/review-4.png" alt="Отзыв: каждую секунду были мурашки" />
           </div>
         </div>
-        <p class="font-serif italic text-cream text-lg text-center drop-shadow">«Каждую секунду были мурашки»</p>
+        <p class="review-caption font-serif italic text-cream text-lg text-center drop-shadow">«Каждую секунду были мурашки»</p>
       </article>
 
       <article class="flex flex-col items-center gap-4">
@@ -738,7 +805,7 @@
             <img src="assets/review-5.png" alt="Отзыв: очень древнее и сильное" />
           </div>
         </div>
-        <p class="font-serif italic text-cream text-lg text-center drop-shadow">«Очень древнее и сильное»</p>
+        <p class="review-caption font-serif italic text-cream text-lg text-center drop-shadow">«Очень древнее и сильное»</p>
       </article>
 
       <article class="flex flex-col items-center gap-4">
@@ -747,7 +814,7 @@
             <img src="assets/review-6.png" alt="Отзыв: и всё как нужно" />
           </div>
         </div>
-        <p class="font-serif italic text-cream text-lg text-center drop-shadow">«И всё как нужно»</p>
+        <p class="review-caption font-serif italic text-cream text-lg text-center drop-shadow">«И всё как нужно»</p>
       </article>
     </div>
 
