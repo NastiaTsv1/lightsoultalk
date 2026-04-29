@@ -2,7 +2,7 @@
 <html lang="ru">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
   <title>LightSoulTalk — Стихотворные медитации под запрос</title>
   <script src="https://cdn.tailwindcss.com"></script>
   <link rel="preconnect" href="https://fonts.googleapis.com" />
@@ -41,15 +41,16 @@
 
     html { scroll-behavior: smooth; }
 
-    /* ── GLOBAL BACKGROUND: painting as fixed texture ── */
     body {
       font-family: 'Jost', sans-serif;
       color: #183D34;
       background-color: #1a1008;
       position: relative;
+      /* Prevent horizontal scroll on mobile */
+      overflow-x: hidden;
     }
 
-    /* Painting fixed layer */
+    /* Painting fixed background */
     body::before {
       content: '';
       position: fixed;
@@ -63,7 +64,6 @@
       z-index: 0;
     }
 
-    /* Warm amber-teal colour wash over painting */
     body::after {
       content: '';
       position: fixed;
@@ -78,58 +78,39 @@
       z-index: 0;
     }
 
-    /* All content sits above the bg layers */
     body > * { position: relative; z-index: 1; }
 
-    /* ── CARDS & SECTIONS: semi-transparent glass panels ── */
+    /* Glass panels */
     .glass {
-      background: rgba(247, 239, 230, 0.82);
+      background: rgba(247, 239, 230, 0.84);
       backdrop-filter: blur(14px) saturate(1.3);
       -webkit-backdrop-filter: blur(14px) saturate(1.3);
     }
     .glass-dark {
-      background: rgba(24, 61, 52, 0.78);
+      background: rgba(24, 61, 52, 0.80);
       backdrop-filter: blur(14px);
       -webkit-backdrop-filter: blur(14px);
     }
     .glass-light {
-      background: rgba(247, 239, 230, 0.65);
+      background: rgba(247, 239, 230, 0.68);
       backdrop-filter: blur(10px);
       -webkit-backdrop-filter: blur(10px);
     }
 
-    /* Section backgrounds — richer now */
-    .section-cream {
-      background: rgba(247, 239, 230, 0.72);
-      backdrop-filter: blur(20px);
-    }
-    .section-tinted {
-      background: linear-gradient(
-        135deg,
-        rgba(24,61,52,0.70) 0%,
-        rgba(122,38,54,0.55) 100%
-      );
-      backdrop-filter: blur(12px);
-    }
-
-    /* ── TYPOGRAPHY COLOUR on dark sections ── */
-    .on-dark { color: #F7EFE6; }
-    .on-dark p, .on-dark li { color: rgba(247,239,230,0.80); }
-
-    /* Sticky header */
+    /* Header */
     #header {
       position: sticky; top: 0; z-index: 50;
-      background: rgba(24, 61, 52, 0.88);
+      background: rgba(24, 61, 52, 0.92);
       backdrop-filter: blur(18px);
+      -webkit-backdrop-filter: blur(18px);
       border-bottom: 1px solid rgba(201,164,92,0.25);
-      box-shadow: 0 2px 20px rgba(0,0,0,0.25);
+      box-shadow: 0 2px 20px rgba(0,0,0,0.3);
     }
-    #header .logo-text { color: var(--cream); }
     #header nav a { color: rgba(247,239,230,0.75); }
     #header nav a:hover { color: var(--gold); }
 
     /* Scroll reveal */
-    .reveal { opacity: 0; transform: translateY(28px); transition: opacity 0.7s ease, transform 0.7s ease; }
+    .reveal { opacity: 0; transform: translateY(24px); transition: opacity 0.65s ease, transform 0.65s ease; }
     .reveal.visible { opacity: 1; transform: none; }
 
     /* Marquee */
@@ -147,7 +128,7 @@
 
     /* Cards */
     .card-hover { transition: transform 0.25s ease, box-shadow 0.25s ease; }
-    .card-hover:hover { transform: translateY(-5px); box-shadow: 0 20px 50px rgba(0,0,0,0.25); }
+    .card-hover:hover { transform: translateY(-4px); box-shadow: 0 18px 44px rgba(0,0,0,0.22); }
 
     /* Buttons */
     .btn-primary { transition: background 0.2s, transform 0.15s, box-shadow 0.2s; }
@@ -158,99 +139,6 @@
     /* Divider */
     .divider { width: 48px; height: 2px; background: linear-gradient(to right, #C9A45C, #C98C9B); border-radius: 2px; margin: 0 auto; }
 
-    /* Petal */
-    .petal { opacity: 0.22; border-radius: 50% 20% 50% 20%; }
-
-    /* Reviews: 3 clean cards, mobile-first */
-    .reviews-row {
-      display: grid;
-      grid-template-columns: 1fr;
-      gap: 1.75rem;
-      max-width: 380px;
-      margin: 0 auto;
-    }
-
-    .reviews-row > article {
-      width: 100%;
-    }
-
-    .phone-frame {
-      position: relative;
-      width: 100%;
-      height: min(440px, 68vh);
-      overflow: hidden;
-      border-radius: 1.65rem;
-      border: 3px solid rgba(230,209,202,0.58);
-      background: rgba(24,61,52,0.72);
-      box-shadow: 0 14px 38px rgba(0,0,0,0.28);
-    }
-
-    .review-window {
-      height: 100%;
-      overflow-y: auto;
-      overflow-x: hidden;
-      border-radius: 1.45rem;
-      background: #9fc28f;
-      overscroll-behavior: contain;
-      scrollbar-width: thin;
-      scrollbar-color: rgba(24,61,52,0.35) transparent;
-      touch-action: pan-y;
-    }
-
-    .review-window::-webkit-scrollbar { width: 5px; }
-    .review-window::-webkit-scrollbar-track { background: transparent; }
-    .review-window::-webkit-scrollbar-thumb {
-      background: rgba(24,61,52,0.35);
-      border-radius: 999px;
-    }
-
-    .review-window img {
-      display: block;
-      width: 100%;
-      height: auto;
-    }
-
-    .review-caption {
-      max-width: 340px;
-      min-height: 2.8rem;
-      margin: 0 auto;
-      padding: 0 .25rem;
-      line-height: 1.15;
-    }
-
-    @media (max-width: 639px) {
-      #reviews {
-        padding-left: 1rem;
-        padding-right: 1rem;
-      }
-
-      #reviews h2 {
-        font-size: 2.15rem !important;
-        line-height: 1.05 !important;
-      }
-
-      #reviews .divider { margin-bottom: 1.25rem; }
-    }
-
-    @media (min-width: 640px) {
-      .reviews-row {
-        max-width: 720px;
-        grid-template-columns: repeat(2, minmax(0, 1fr));
-      }
-
-      .phone-frame { height: 460px; }
-    }
-
-    @media (min-width: 1024px) {
-      .reviews-row {
-        max-width: 1060px;
-        grid-template-columns: repeat(3, minmax(0, 1fr));
-        gap: 2rem;
-      }
-
-      .phone-frame { height: 480px; }
-    }
-
     /* Eye circle */
     .eye-circle { border-radius: 50%; background: linear-gradient(135deg, #C98C9B, #E6D1CA 50%, #C9A45C); }
 
@@ -258,7 +146,7 @@
     .icon-wrap {
       width: 52px; height: 52px; border-radius: 50%;
       display: flex; align-items: center; justify-content: center; flex-shrink: 0;
-      background: linear-gradient(135deg, rgba(247,239,230,0.9), rgba(230,209,202,0.9));
+      background: linear-gradient(135deg, rgba(247,239,230,0.95), rgba(230,209,202,0.9));
       box-shadow: 0 2px 12px rgba(0,0,0,0.15);
     }
     .icon-wrap-lg {
@@ -269,17 +157,157 @@
       box-shadow: 0 3px 16px rgba(0,0,0,0.18);
     }
 
-    /* Audio */
+    /* Audio range */
     #progress { -webkit-appearance: none; appearance: none; height: 6px; border-radius: 3px; outline: none; cursor: pointer; }
-    #progress::-webkit-slider-thumb { -webkit-appearance: none; width: 14px; height: 14px; border-radius: 50%; background: #C9A45C; cursor: pointer; box-shadow: 0 1px 4px rgba(0,0,0,0.3); }
-    #progress::-moz-range-thumb { width: 14px; height: 14px; border-radius: 50%; background: #C9A45C; cursor: pointer; border: none; }
+    #progress::-webkit-slider-thumb { -webkit-appearance: none; width: 16px; height: 16px; border-radius: 50%; background: #C9A45C; cursor: pointer; box-shadow: 0 1px 4px rgba(0,0,0,0.3); }
+    #progress::-moz-range-thumb { width: 16px; height: 16px; border-radius: 50%; background: #C9A45C; cursor: pointer; border: none; }
 
     /* Quote strip */
-    .quote-strip { background: rgba(24,61,52,0.85); backdrop-filter: blur(8px); }
+    .quote-strip { background: rgba(24,61,52,0.88); backdrop-filter: blur(8px); -webkit-backdrop-filter: blur(8px); }
 
+    /* ============================================================
+       REVIEWS — MOBILE-FIRST SCROLL FIX
+       ============================================================ */
+
+    /* Horizontal scroll container on mobile */
+    .reviews-scroll-wrap {
+      /* Allow horizontal drag on mobile */
+      overflow-x: auto;
+      overflow-y: hidden;
+      -webkit-overflow-scrolling: touch;
+      scroll-snap-type: x mandatory;
+      scroll-padding: 0 1.25rem;
+      display: flex;
+      gap: 1.25rem;
+      padding: 0.5rem 1.25rem 1.5rem;
+      /* Hide scrollbar visually */
+      scrollbar-width: none;
+    }
+    .reviews-scroll-wrap::-webkit-scrollbar { display: none; }
+
+    .review-card {
+      /* Each card snaps into place */
+      scroll-snap-align: center;
+      flex: 0 0 min(82vw, 320px);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 1rem;
+    }
+
+    /* The phone-style frame */
+    .phone-frame {
+      width: 100%;
+      height: 440px;
+      border-radius: 1.65rem;
+      border: 2.5px solid rgba(230,209,202,0.55);
+      overflow: hidden;
+      box-shadow: 0 12px 36px rgba(0,0,0,0.3);
+      background: rgba(24,61,52,0.65);
+      position: relative;
+    }
+
+    /* *** THE KEY FIX: the inner scrollable window ***
+       - overflow-y: scroll (not auto) forces scroll context always
+       - -webkit-overflow-scrolling: touch enables momentum on iOS
+       - touch-action: pan-y allows vertical swipe without conflict
+       - overscroll-behavior-y: contain stops the page scrolling behind
+    */
+    .review-window {
+      position: absolute;
+      inset: 0;
+      overflow-y: scroll;
+      overflow-x: hidden;
+      -webkit-overflow-scrolling: touch;
+      touch-action: pan-y;
+      overscroll-behavior-y: contain;
+      border-radius: 1.45rem;
+      background: #a0c896;
+      scrollbar-width: thin;
+      scrollbar-color: rgba(24,61,52,0.3) transparent;
+    }
+    .review-window::-webkit-scrollbar { width: 4px; }
+    .review-window::-webkit-scrollbar-track { background: transparent; }
+    .review-window::-webkit-scrollbar-thumb { background: rgba(24,61,52,0.3); border-radius: 999px; }
+
+    .review-window img {
+      display: block;
+      width: 100%;
+      height: auto;
+      /* Prevent drag interference */
+      pointer-events: none;
+      user-select: none;
+      -webkit-user-drag: none;
+    }
+
+    .review-caption {
+      font-size: 1.05rem;
+      line-height: 1.2;
+      text-align: center;
+      padding: 0 0.5rem;
+      min-height: 2.6rem;
+    }
+
+    /* Scroll hint dots */
+    .scroll-dots {
+      display: flex;
+      justify-content: center;
+      gap: 6px;
+      padding-top: 0.25rem;
+    }
+    .scroll-dot {
+      width: 6px; height: 6px;
+      border-radius: 50%;
+      background: rgba(247,239,230,0.35);
+      transition: background 0.3s, transform 0.3s;
+    }
+    .scroll-dot.active {
+      background: #C9A45C;
+      transform: scale(1.3);
+    }
+
+    /* On tablet and desktop: regular grid, no horizontal scroll */
+    @media (min-width: 768px) {
+      .reviews-scroll-wrap {
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        overflow: visible;
+        scroll-snap-type: none;
+        padding: 0;
+        gap: 2rem;
+        max-width: 1060px;
+        margin: 0 auto;
+      }
+      .review-card {
+        flex: none;
+        width: 100%;
+      }
+      .phone-frame { height: 480px; }
+      .scroll-dots { display: none; }
+    }
+
+    /* ============================================================
+       GENERAL MOBILE TYPOGRAPHY & LAYOUT
+       ============================================================ */
     @media (max-width: 640px) {
-      h1 { font-size: 2.2rem !important; line-height: 1.15 !important; }
-      h2 { font-size: 1.8rem !important; }
+      h1 { font-size: 2.1rem !important; line-height: 1.15 !important; }
+      h2 { font-size: 1.85rem !important; line-height: 1.1 !important; }
+
+      /* Tighter section padding on mobile */
+      section { padding-top: 3.5rem !important; padding-bottom: 3.5rem !important; }
+
+      /* Hero: show image first, then text below, full-width */
+      .hero-image-wrap { max-width: 100% !important; }
+      .hero-image-wrap img { border-radius: 1rem !important; }
+
+      /* Cards: full width on mobile */
+      .card-hover { box-shadow: none; }
+
+      /* Audio player wider on mobile */
+      #progress { height: 8px; }
+
+      /* Timeline steps: reduce gap */
+      .timeline-step-gap { padding-bottom: 1.25rem !important; }
     }
   </style>
 
@@ -349,17 +377,17 @@
     </defs>
   </svg>
 </head>
-<body class="overflow-x-hidden">
+<body>
 
 <!-- ===================== HEADER ===================== -->
 <header id="header">
-  <div class="max-w-6xl mx-auto px-4 py-3 flex items-center justify-between gap-4">
-    <a href="#" class="flex items-center gap-3 flex-shrink-0">
-      <div class="w-10 h-10 eye-circle flex items-center justify-center overflow-hidden">
+  <div class="max-w-6xl mx-auto px-4 py-3 flex items-center justify-between gap-3">
+    <a href="#" class="flex items-center gap-2.5 flex-shrink-0">
+      <div class="w-9 h-9 eye-circle flex items-center justify-center overflow-hidden">
         <img src="hero-image.png" alt="LightSoulTalk логотип" class="w-full h-full object-cover object-left-top"/>
       </div>
       <div>
-        <div class="font-serif font-semibold text-cream text-lg leading-tight">LightSoulTalk</div>
+        <div class="font-serif font-semibold text-cream text-base sm:text-lg leading-tight">LightSoulTalk</div>
         <div class="text-xs text-rose font-sans font-light tracking-wide hidden sm:block">Стихотворные медитации</div>
       </div>
     </a>
@@ -372,59 +400,65 @@
     </nav>
     <a href="https://docs.google.com/forms/d/e/1FAIpQLSdoc5ghpCXFmpZeyU1r0sF1YUnmNtxGoTqiXsOxiKTeG8VSsQ/viewform?usp=header"
        target="_blank"
-       class="btn-primary bg-gold text-forest text-sm font-sans font-medium px-4 py-2 rounded-full flex-shrink-0">
+       class="btn-primary bg-gold text-forest text-xs sm:text-sm font-sans font-medium px-3 sm:px-4 py-2 rounded-full flex-shrink-0 whitespace-nowrap">
       Заполнить анкету
     </a>
   </div>
 </header>
 
 <!-- ===================== HERO ===================== -->
-<section class="relative min-h-screen flex items-center pt-8 pb-20 px-4 overflow-hidden">
-  <div aria-hidden="true" class="petal absolute top-24 left-8 w-16 h-24 bg-rose rotate-12"></div>
-  <div aria-hidden="true" class="petal absolute bottom-32 right-12 w-12 h-20 bg-gold -rotate-12"></div>
+<section class="relative min-h-screen flex items-center py-12 px-4 overflow-hidden">
+  <div class="max-w-6xl mx-auto w-full grid lg:grid-cols-2 gap-8 lg:gap-20 items-center">
 
-  <div class="max-w-6xl mx-auto w-full grid lg:grid-cols-2 gap-12 lg:gap-20 items-center">
-    <div class="order-2 lg:order-1">
-      <!-- Glass card for hero text -->
-      <div class="glass rounded-3xl p-8 lg:p-10 shadow-2xl">
-        <div class="inline-block text-xs font-sans font-light tracking-widest text-rose uppercase mb-6 px-4 py-1.5 rounded-full border border-rose/40 bg-rose/10">
+    <!-- Image first on mobile -->
+    <div class="order-1 lg:order-2 flex justify-center items-center hero-image-wrap">
+      <div class="relative w-full max-w-sm lg:max-w-lg">
+        <div class="absolute inset-0 rounded-3xl blur-3xl opacity-50"
+             style="background:radial-gradient(ellipse,#C98C9B 0%,#C9A45C 50%,transparent 80%);transform:scale(1.15);"></div>
+        <img src="hero-image.png" alt="LightSoulTalk — образ медитации"
+             class="relative w-full h-auto object-contain drop-shadow-2xl" style="border-radius:1.5rem;"/>
+        <div class="absolute -bottom-4 left-1/2 -translate-x-1/2 glass shadow-lg rounded-full px-4 py-1.5 text-xs font-sans font-light text-forest/80 whitespace-nowrap border border-blush/40">
+          ✦ Живое послание только для тебя ✦
+        </div>
+      </div>
+    </div>
+
+    <!-- Text -->
+    <div class="order-2 lg:order-1 mt-6 lg:mt-0">
+      <div class="glass rounded-3xl p-6 sm:p-8 lg:p-10 shadow-2xl">
+        <div class="inline-block text-xs font-sans font-light tracking-widest text-rose uppercase mb-4 sm:mb-6 px-4 py-1.5 rounded-full border border-rose/40 bg-rose/10">
           LightSoulTalk
         </div>
-        <h1 class="font-serif font-light text-forest leading-tight mb-5" style="font-size:3rem;">
+        <h1 class="font-serif font-light text-forest leading-tight mb-4" style="font-size:clamp(1.9rem,5vw,3rem);">
           Твоя личная медитация<br/>
           <em class="text-burgundy not-italic">в рифме, голосе</em><br/>
           и музыке
         </h1>
-        <p class="font-sans font-light text-forest/80 text-lg leading-relaxed mb-3">
+        <p class="font-sans font-light text-forest/80 text-base sm:text-lg leading-relaxed mb-3">
           Стихотворный текст, голос и музыка — созданные из твоего запроса, только для тебя
         </p>
-        <p class="font-serif italic text-rose text-base mb-8">«Каждая медитация рождается один раз и не повторяется»</p>
-        <div class="flex flex-col sm:flex-row gap-3 mb-6">
+        <p class="font-serif italic text-rose text-sm sm:text-base mb-6 sm:mb-8">
+          «Каждая медитация рождается один раз и не повторяется»
+        </p>
+        <div class="flex flex-col sm:flex-row gap-3 mb-5">
           <a href="https://docs.google.com/forms/d/e/1FAIpQLSdoc5ghpCXFmpZeyU1r0sF1YUnmNtxGoTqiXsOxiKTeG8VSsQ/viewform?usp=header"
              target="_blank"
-             class="btn-primary bg-forest text-cream font-sans font-light px-8 py-3.5 rounded-full text-center text-base">Заполнить анкету</a>
+             class="btn-primary bg-forest text-cream font-sans font-light px-7 py-3.5 rounded-full text-center text-base">
+            Заполнить анкету
+          </a>
           <a href="https://t.me/NastiaTsv" target="_blank"
-             class="btn-secondary border border-rose text-rose font-sans font-light px-8 py-3.5 rounded-full text-center text-base">Написать в Telegram</a>
+             class="btn-secondary border border-rose text-rose font-sans font-light px-7 py-3.5 rounded-full text-center text-base">
+            Написать в Telegram
+          </a>
         </div>
         <p class="text-sm font-sans font-light text-forest/50 italic">Более 50 женщин уже получили свою практику</p>
-      </div>
-    </div>
-
-    <div class="order-1 lg:order-2 flex justify-center items-center">
-      <div class="relative w-full max-w-lg">
-        <div class="absolute inset-0 rounded-3xl blur-3xl opacity-50" style="background:radial-gradient(ellipse,#C98C9B 0%,#C9A45C 50%,transparent 80%);transform:scale(1.15);"></div>
-        <img src="hero-image.png" alt="LightSoulTalk — образ медитации"
-             class="relative w-full h-auto object-contain drop-shadow-2xl" style="border-radius:1.5rem;"/>
-        <div class="absolute -bottom-4 left-1/2 -translate-x-1/2 glass shadow-lg rounded-full px-5 py-2 text-xs font-sans font-light text-forest/80 whitespace-nowrap border border-blush/40">
-          ✦ Живое послание только для тебя ✦
-        </div>
       </div>
     </div>
   </div>
 </section>
 
 <!-- ===================== QUOTE STRIP ===================== -->
-<div class="quote-strip py-4 overflow-hidden border-y border-gold/20">
+<div class="quote-strip py-3.5 overflow-hidden border-y border-gold/20">
   <div class="marquee-track text-sm font-serif italic text-cream">
     <span>«Попадание в самое сердце»</span><span class="text-gold">✦</span>
     <span>«Я слушала и плакала»</span><span class="text-gold">✦</span>
@@ -442,87 +476,81 @@
 </div>
 
 <!-- ===================== ABOUT ===================== -->
-<section id="about" class="relative py-24 px-4">
+<section id="about" class="relative py-20 px-4">
   <div class="max-w-3xl mx-auto reveal">
-    <div class="glass rounded-3xl p-10 lg:p-14 text-center shadow-xl border border-blush/30">
+    <div class="glass rounded-3xl p-8 sm:p-10 lg:p-14 text-center shadow-xl border border-blush/30">
       <div class="divider mb-8"></div>
-      <h2 class="font-serif font-light text-forest text-4xl lg:text-5xl mb-8">Привет, моя Милая</h2>
-      <p class="font-sans font-light text-forest/80 text-lg leading-loose mb-6">
+      <h2 class="font-serif font-light text-forest text-3xl sm:text-4xl lg:text-5xl mb-6 sm:mb-8">Привет, моя Милая</h2>
+      <p class="font-sans font-light text-forest/80 text-base sm:text-lg leading-loose mb-6">
         Я — <strong class="font-medium text-forest">Анастасия Цветкова</strong>, и я создаю стихотворные медитации и сказки под личный запрос. Через рифму, голос, музыку и образы я бережно прикасаюсь к твоему состоянию — и создаю живое послание, которое рождается именно из тебя.
       </p>
-      <p class="font-sans font-light text-forest/80 text-lg leading-loose">
+      <p class="font-sans font-light text-forest/80 text-base sm:text-lg leading-loose">
         Это не шаблон и не универсальная практика. Я не использую готовые тексты и не повторяю одно и то же дважды. Каждая работа — это отдельный маленький мир, который появляется однажды и существует <em class="font-serif italic text-burgundy">только для тебя</em>.
       </p>
-      <div class="mt-10 w-16 h-16 eye-circle mx-auto opacity-70"></div>
+      <div class="mt-8 w-14 h-14 eye-circle mx-auto opacity-70"></div>
     </div>
   </div>
 </section>
 
 <!-- ===================== WHAT IS IT ===================== -->
-<section class="relative py-20 px-4">
+<section class="relative py-16 px-4">
   <div class="max-w-5xl mx-auto">
-    <div class="text-center mb-14 reveal">
-      <div class="glass rounded-3xl px-8 py-10 inline-block shadow-xl border border-blush/30 max-w-2xl">
-        <div class="divider mb-8"></div>
-        <h2 class="font-serif font-light text-forest text-4xl lg:text-5xl mb-6">
+    <div class="text-center mb-12 reveal">
+      <div class="glass rounded-3xl px-6 sm:px-10 py-8 sm:py-10 inline-block shadow-xl border border-blush/30 w-full max-w-2xl">
+        <div class="divider mb-7"></div>
+        <h2 class="font-serif font-light text-forest text-3xl sm:text-4xl lg:text-5xl mb-5">
           Что такое стихотворная<br/><em class="text-burgundy">медитация под запрос?</em>
         </h2>
-        <p class="font-sans font-light text-forest/75 text-lg leading-loose">
+        <p class="font-sans font-light text-forest/75 text-base sm:text-lg leading-loose">
           Это персональная аудиопрактика, в которой твой запрос превращается в стихотворный текст, голос, музыку и образы. Через ритм, повтор и мягкие образы практика помогает замедлиться, услышать себя и бережно прикоснуться к тому, что внутри давно просит внимания.
         </p>
       </div>
     </div>
 
-    <!-- 3 cards -->
-    <div class="grid md:grid-cols-3 gap-6 mb-16 reveal">
-      <div class="card-hover glass rounded-2xl p-8 border border-blush/40 text-center shadow-lg">
+    <div class="grid sm:grid-cols-3 gap-5 mb-12 reveal">
+      <div class="card-hover glass rounded-2xl p-7 border border-blush/40 text-center shadow-lg">
         <div class="icon-wrap-lg"><svg width="38" height="38"><use href="#ic-lotus"/></svg></div>
-        <h3 class="font-serif text-forest text-xl mb-3">Стихотворная медитация</h3>
+        <h3 class="font-serif text-forest text-xl mb-2">Стихотворная медитация</h3>
         <p class="font-sans font-light text-forest/70 text-sm leading-relaxed">Рифмованный текст, созданный из твоего запроса и внутренних образов</p>
       </div>
-      <div class="card-hover glass rounded-2xl p-8 border border-blush/40 text-center shadow-lg">
+      <div class="card-hover glass rounded-2xl p-7 border border-blush/40 text-center shadow-lg">
         <div class="icon-wrap-lg"><svg width="38" height="38"><use href="#ic-fairytale"/></svg></div>
-        <h3 class="font-serif text-forest text-xl mb-3">Персональная сказка</h3>
+        <h3 class="font-serif text-forest text-xl mb-2">Персональная сказка</h3>
         <p class="font-sans font-light text-forest/70 text-sm leading-relaxed">Живая история, в которой ты — главная героиня своего внутреннего пути</p>
       </div>
-      <div class="card-hover glass rounded-2xl p-8 border border-blush/40 text-center shadow-lg">
+      <div class="card-hover glass rounded-2xl p-7 border border-blush/40 text-center shadow-lg">
         <div class="icon-wrap-lg"><svg width="38" height="38"><use href="#ic-waves"/></svg></div>
-        <h3 class="font-serif text-forest text-xl mb-3">Медитация с музыкой</h3>
+        <h3 class="font-serif text-forest text-xl mb-2">Медитация с музыкой</h3>
         <p class="font-sans font-light text-forest/70 text-sm leading-relaxed">Голос и музыкальное сопровождение, которое усиливает погружение</p>
       </div>
     </div>
 
-    <!-- Sample fragment + audio -->
+    <!-- Audio fragment -->
     <div class="reveal max-w-2xl mx-auto">
-      <div class="glass rounded-2xl border border-gold/40 p-10 text-center relative overflow-hidden shadow-xl">
+      <div class="glass rounded-2xl border border-gold/40 px-6 sm:px-10 py-8 text-center relative overflow-hidden shadow-xl">
         <div class="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-transparent via-gold to-transparent opacity-80"></div>
-        <p class="text-xs font-sans font-light tracking-widest text-gold uppercase mb-6">Вот как это может звучать</p>
-        <blockquote class="font-serif italic text-forest text-xl leading-loose">
+        <p class="text-xs font-sans font-light tracking-widest text-gold uppercase mb-5">Вот как это может звучать</p>
+        <blockquote class="font-serif italic text-forest text-lg sm:text-xl leading-loose mb-8">
           «Видимость»
         </blockquote>
-
-        <!-- AUDIO PLAYER -->
-        <div class="mt-8 flex flex-col items-center gap-3">
-          <audio id="meditation-audio" src="Vidimost.mp3" preload="metadata"></audio>
-          <div class="flex items-center gap-4 w-full max-w-sm">
-            <button onclick="togglePlay()" id="play-btn"
-              class="flex-shrink-0 w-12 h-12 rounded-full bg-forest text-cream flex items-center justify-center shadow-lg hover:bg-burgundy transition-colors duration-200"
-              aria-label="Воспроизвести">
-              <svg id="icon-play" xmlns="http://www.w3.org/2000/svg" class="w-5 h-5" viewBox="0 0 24 24" fill="currentColor"><path d="M8 5v14l11-7z"/></svg>
-              <svg id="icon-pause" xmlns="http://www.w3.org/2000/svg" class="w-5 h-5 hidden" viewBox="0 0 24 24" fill="currentColor"><path d="M6 19h4V5H6v14zm8-14v14h4V5h-4z"/></svg>
-            </button>
-            <div class="flex-1 flex flex-col gap-1.5">
-              <input id="progress" type="range" value="0" min="0" step="0.01" class="w-full cursor-pointer"
-                style="background:linear-gradient(to right,#C9A45C 0%,#E6D1CA 0%);"/>
-              <div class="flex justify-between text-xs font-sans font-light text-forest/50">
-                <span id="time-current">0:00</span>
-                <span id="time-total">0:00</span>
-              </div>
+        <audio id="meditation-audio" src="Vidimost.mp3" preload="metadata"></audio>
+        <div class="flex items-center gap-3 sm:gap-4 w-full max-w-xs sm:max-w-sm mx-auto">
+          <button onclick="togglePlay()" id="play-btn"
+            class="flex-shrink-0 w-12 h-12 rounded-full bg-forest text-cream flex items-center justify-center shadow-lg hover:bg-burgundy transition-colors duration-200"
+            aria-label="Воспроизвести">
+            <svg id="icon-play" xmlns="http://www.w3.org/2000/svg" class="w-5 h-5" viewBox="0 0 24 24" fill="currentColor"><path d="M8 5v14l11-7z"/></svg>
+            <svg id="icon-pause" xmlns="http://www.w3.org/2000/svg" class="w-5 h-5 hidden" viewBox="0 0 24 24" fill="currentColor"><path d="M6 19h4V5H6v14zm8-14v14h4V5h-4z"/></svg>
+          </button>
+          <div class="flex-1 flex flex-col gap-1.5">
+            <input id="progress" type="range" value="0" min="0" step="0.01" class="w-full cursor-pointer"
+              style="background:linear-gradient(to right,#C9A45C 0%,rgba(230,209,202,0.5) 0%);"/>
+            <div class="flex justify-between text-xs font-sans font-light text-forest/50">
+              <span id="time-current">0:00</span>
+              <span id="time-total">0:00</span>
             </div>
           </div>
         </div>
-
-        <p class="mt-6 text-xs font-sans font-light text-forest/45 italic">Фрагмент из реальной медитации</p>
+        <p class="mt-5 text-xs font-sans font-light text-forest/45 italic">Фрагмент из реальной медитации</p>
         <div class="absolute bottom-0 left-0 w-full h-1 bg-gradient-to-r from-transparent via-rose to-transparent opacity-60"></div>
       </div>
     </div>
@@ -530,92 +558,92 @@
 </section>
 
 <!-- ===================== WHO IS IT FOR ===================== -->
-<section class="relative py-24 px-4">
+<section class="relative py-20 px-4">
   <div class="max-w-5xl mx-auto">
-    <div class="text-center mb-14 reveal">
-      <div class="divider mb-8"></div>
-      <h2 class="font-serif font-light text-cream text-4xl lg:text-5xl drop-shadow-lg">
+    <div class="text-center mb-12 reveal">
+      <div class="divider mb-7"></div>
+      <h2 class="font-serif font-light text-cream text-3xl sm:text-4xl lg:text-5xl drop-shadow-lg">
         Тебе может откликнуться, <em class="text-gold">если...</em>
       </h2>
     </div>
-    <div class="grid sm:grid-cols-2 lg:grid-cols-3 gap-5 reveal">
-      <div class="card-hover glass-light rounded-2xl p-7 border border-blush/40 shadow-lg">
-        <div class="w-8 h-px bg-gold mb-5"></div>
-        <p class="font-serif text-forest text-lg leading-snug">«Внутри что-то сдвинулось, а слов ещё нет»</p>
+    <div class="grid sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-5 reveal">
+      <div class="card-hover glass-light rounded-2xl p-6 sm:p-7 border border-blush/40 shadow-lg">
+        <div class="w-8 h-px bg-gold mb-4 sm:mb-5"></div>
+        <p class="font-serif text-forest text-base sm:text-lg leading-snug">«Внутри что-то сдвинулось, а слов ещё нет»</p>
       </div>
-      <div class="card-hover glass-light rounded-2xl p-7 border border-rose/30 shadow-lg">
-        <div class="w-8 h-px bg-rose mb-5"></div>
-        <p class="font-serif text-forest text-lg leading-snug">«Хочется плакать — и не знаешь почему»</p>
+      <div class="card-hover glass-light rounded-2xl p-6 sm:p-7 border border-rose/30 shadow-lg">
+        <div class="w-8 h-px bg-rose mb-4 sm:mb-5"></div>
+        <p class="font-serif text-forest text-base sm:text-lg leading-snug">«Хочется плакать — и не знаешь почему»</p>
       </div>
-      <div class="card-hover glass-light rounded-2xl p-7 border border-blush/40 shadow-lg">
-        <div class="w-8 h-px bg-gold mb-5"></div>
-        <p class="font-serif text-forest text-lg leading-snug">«Детство вдруг напомнило о себе»</p>
+      <div class="card-hover glass-light rounded-2xl p-6 sm:p-7 border border-blush/40 shadow-lg">
+        <div class="w-8 h-px bg-gold mb-4 sm:mb-5"></div>
+        <p class="font-serif text-forest text-base sm:text-lg leading-snug">«Детство вдруг напомнило о себе»</p>
       </div>
-      <div class="card-hover glass-light rounded-2xl p-7 border border-gold/30 shadow-lg">
-        <div class="w-8 h-px bg-burgundy mb-5"></div>
-        <p class="font-serif text-forest text-lg leading-snug">«Устала быть сильной»</p>
+      <div class="card-hover glass-light rounded-2xl p-6 sm:p-7 border border-gold/30 shadow-lg">
+        <div class="w-8 h-px bg-burgundy mb-4 sm:mb-5"></div>
+        <p class="font-serif text-forest text-base sm:text-lg leading-snug">«Устала быть сильной»</p>
       </div>
-      <div class="card-hover glass-light rounded-2xl p-7 border border-blue/20 shadow-lg">
-        <div class="w-8 h-px bg-blue mb-5"></div>
-        <p class="font-serif text-forest text-lg leading-snug">«Хочется, чтобы кто-то просто был рядом»</p>
+      <div class="card-hover glass-light rounded-2xl p-6 sm:p-7 border border-blue/20 shadow-lg">
+        <div class="w-8 h-px bg-blue mb-4 sm:mb-5"></div>
+        <p class="font-serif text-forest text-base sm:text-lg leading-snug">«Хочется, чтобы кто-то просто был рядом»</p>
       </div>
-      <div class="card-hover glass-light rounded-2xl p-7 border border-blush/40 shadow-lg">
-        <div class="w-8 h-px bg-rose mb-5"></div>
-        <p class="font-serif text-forest text-lg leading-snug">«Тело говорит раньше, чем голова»</p>
+      <div class="card-hover glass-light rounded-2xl p-6 sm:p-7 border border-blush/40 shadow-lg">
+        <div class="w-8 h-px bg-rose mb-4 sm:mb-5"></div>
+        <p class="font-serif text-forest text-base sm:text-lg leading-snug">«Тело говорит раньше, чем голова»</p>
       </div>
     </div>
   </div>
 </section>
 
 <!-- ===================== FORMATS ===================== -->
-<section id="formats" class="relative py-24 px-4">
+<section id="formats" class="relative py-20 px-4">
   <div class="max-w-5xl mx-auto">
-    <div class="text-center mb-14 reveal">
-      <div class="divider mb-8"></div>
-      <h2 class="font-serif font-light text-cream text-4xl lg:text-5xl drop-shadow-lg">
+    <div class="text-center mb-12 reveal">
+      <div class="divider mb-7"></div>
+      <h2 class="font-serif font-light text-cream text-3xl sm:text-4xl lg:text-5xl drop-shadow-lg">
         Формат — такой, каким<br/><em class="text-gold">тебе сейчас нужно</em>
       </h2>
     </div>
-    <div class="grid sm:grid-cols-2 lg:grid-cols-3 gap-5 reveal">
-      <div class="card-hover glass rounded-2xl p-7 border border-blush/40 flex items-start gap-4 shadow-lg">
+    <div class="grid sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-5 reveal">
+      <div class="card-hover glass rounded-2xl p-6 border border-blush/40 flex items-start gap-4 shadow-lg">
         <div class="icon-wrap"><svg width="30" height="30"><use href="#ic-scroll"/></svg></div>
         <div>
-          <h3 class="font-serif text-forest text-lg mb-1">Текст медитации</h3>
+          <h3 class="font-serif text-forest text-base sm:text-lg mb-1">Текст медитации</h3>
           <p class="font-sans font-light text-forest/65 text-sm">Стихотворный текст, который можно перечитывать</p>
         </div>
       </div>
-      <div class="card-hover glass rounded-2xl p-7 border border-blush/40 flex items-start gap-4 shadow-lg">
+      <div class="card-hover glass rounded-2xl p-6 border border-blush/40 flex items-start gap-4 shadow-lg">
         <div class="icon-wrap"><svg width="30" height="30"><use href="#ic-mic"/></svg></div>
         <div>
-          <h3 class="font-serif text-forest text-lg mb-1">Аудио с голосом</h3>
+          <h3 class="font-serif text-forest text-base sm:text-lg mb-1">Аудио с голосом</h3>
           <p class="font-sans font-light text-forest/65 text-sm">Живое голосовое звучание твоей практики</p>
         </div>
       </div>
-      <div class="card-hover glass rounded-2xl p-7 border border-blush/40 flex items-start gap-4 shadow-lg">
+      <div class="card-hover glass rounded-2xl p-6 border border-blush/40 flex items-start gap-4 shadow-lg">
         <div class="icon-wrap"><svg width="30" height="30"><use href="#ic-music"/></svg></div>
         <div>
-          <h3 class="font-serif text-forest text-lg mb-1">Музыкальное сопровождение</h3>
+          <h3 class="font-serif text-forest text-base sm:text-lg mb-1">Музыкальное сопровождение</h3>
           <p class="font-sans font-light text-forest/65 text-sm">Мягкая музыка, которая усиливает погружение</p>
         </div>
       </div>
-      <div class="card-hover glass rounded-2xl p-7 border border-blush/40 flex items-start gap-4 shadow-lg">
+      <div class="card-hover glass rounded-2xl p-6 border border-blush/40 flex items-start gap-4 shadow-lg">
         <div class="icon-wrap"><svg width="30" height="30"><use href="#ic-book-moon"/></svg></div>
         <div>
-          <h3 class="font-serif text-forest text-lg mb-1">Персональная сказка</h3>
+          <h3 class="font-serif text-forest text-base sm:text-lg mb-1">Персональная сказка</h3>
           <p class="font-sans font-light text-forest/65 text-sm">История, созданная из твоих образов и запроса</p>
         </div>
       </div>
-      <div class="card-hover glass rounded-2xl p-7 border border-blush/40 flex items-start gap-4 shadow-lg">
+      <div class="card-hover glass rounded-2xl p-6 border border-blush/40 flex items-start gap-4 shadow-lg">
         <div class="icon-wrap"><svg width="30" height="30"><use href="#ic-frame"/></svg></div>
         <div>
-          <h3 class="font-serif text-forest text-lg mb-1">Обложка</h3>
+          <h3 class="font-serif text-forest text-base sm:text-lg mb-1">Обложка</h3>
           <p class="font-sans font-light text-forest/65 text-sm">Визуальный образ твоей практики</p>
         </div>
       </div>
-      <div class="card-hover glass rounded-2xl p-7 border border-rose/30 flex items-start gap-4 shadow-lg">
+      <div class="card-hover glass rounded-2xl p-6 border border-rose/30 flex items-start gap-4 shadow-lg">
         <div class="icon-wrap"><svg width="30" height="30"><use href="#ic-heart-chat"/></svg></div>
         <div>
-          <h3 class="font-serif text-forest text-lg mb-1">Поддержка после</h3>
+          <h3 class="font-serif text-forest text-base sm:text-lg mb-1">Поддержка после</h3>
           <p class="font-sans font-light text-forest/65 text-sm">Голосовое сообщение, разбор ощущений и живой отклик в Telegram</p>
         </div>
       </div>
@@ -624,58 +652,58 @@
 </section>
 
 <!-- ===================== PROCESS ===================== -->
-<section id="process" class="relative py-24 px-4">
+<section id="process" class="relative py-20 px-4">
   <div class="max-w-2xl mx-auto">
-    <div class="text-center mb-16 reveal">
-      <div class="divider mb-8"></div>
-      <h2 class="font-serif font-light text-cream text-4xl lg:text-5xl drop-shadow-lg">
+    <div class="text-center mb-12 reveal">
+      <div class="divider mb-7"></div>
+      <h2 class="font-serif font-light text-cream text-3xl sm:text-4xl lg:text-5xl drop-shadow-lg">
         Как рождается<br/><em class="text-gold">твоя медитация</em>
       </h2>
     </div>
-    <div class="glass rounded-3xl p-8 lg:p-10 shadow-xl border border-blush/30 reveal">
+    <div class="glass rounded-3xl p-7 sm:p-10 shadow-xl border border-blush/30 reveal">
       <div class="relative">
         <div class="timeline-line"></div>
-        <div class="space-y-10">
-          <div class="flex gap-8 items-start">
+        <div class="space-y-8 sm:space-y-10">
+          <div class="flex gap-6 sm:gap-8 items-start">
             <div class="flex-shrink-0 w-10 h-10 rounded-full bg-gold flex items-center justify-center text-forest font-serif font-semibold text-sm z-10 relative shadow-md">1</div>
-            <div class="pt-1 pb-6 border-b border-blush/40 flex-1">
-              <h3 class="font-serif text-forest text-xl mb-2">Ты заполняешь анкету</h3>
+            <div class="pt-1 pb-5 sm:pb-6 border-b border-blush/40 flex-1 timeline-step-gap">
+              <h3 class="font-serif text-forest text-lg sm:text-xl mb-2">Ты заполняешь анкету</h3>
               <p class="font-sans font-light text-forest/65 text-sm leading-relaxed">В своём темпе, честно, слушая внутренний голос. Не нужно отвечать идеально — важно отвечать искренне.</p>
             </div>
           </div>
-          <div class="flex gap-8 items-start">
+          <div class="flex gap-6 sm:gap-8 items-start">
             <div class="flex-shrink-0 w-10 h-10 rounded-full bg-rose flex items-center justify-center text-cream font-serif font-semibold text-sm z-10 relative shadow-md">2</div>
-            <div class="pt-1 pb-6 border-b border-blush/40 flex-1">
-              <h3 class="font-serif text-forest text-xl mb-2">Я знакомлюсь с твоими ответами</h3>
+            <div class="pt-1 pb-5 sm:pb-6 border-b border-blush/40 flex-1 timeline-step-gap">
+              <h3 class="font-serif text-forest text-lg sm:text-xl mb-2">Я знакомлюсь с твоими ответами</h3>
               <p class="font-sans font-light text-forest/65 text-sm leading-relaxed">Бережно и внимательно, вчитываясь между строк.</p>
             </div>
           </div>
-          <div class="flex gap-8 items-start">
+          <div class="flex gap-6 sm:gap-8 items-start">
             <div class="flex-shrink-0 w-10 h-10 rounded-full bg-burgundy flex items-center justify-center text-cream font-serif font-semibold text-sm z-10 relative shadow-md">3</div>
-            <div class="pt-1 pb-6 border-b border-blush/40 flex-1">
-              <h3 class="font-serif text-forest text-xl mb-2">Создаю текст</h3>
+            <div class="pt-1 pb-5 sm:pb-6 border-b border-blush/40 flex-1 timeline-step-gap">
+              <h3 class="font-serif text-forest text-lg sm:text-xl mb-2">Создаю текст</h3>
               <p class="font-sans font-light text-forest/65 text-sm leading-relaxed">Из твоих слов, образов, детских воспоминаний и желаемого состояния.</p>
             </div>
           </div>
-          <div class="flex gap-8 items-start">
+          <div class="flex gap-6 sm:gap-8 items-start">
             <div class="flex-shrink-0 w-10 h-10 rounded-full bg-blue flex items-center justify-center text-cream font-serif font-semibold text-sm z-10 relative shadow-md">4</div>
-            <div class="pt-1 pb-6 border-b border-blush/40 flex-1">
-              <h3 class="font-serif text-forest text-xl mb-2">Записываю аудио</h3>
+            <div class="pt-1 pb-5 sm:pb-6 border-b border-blush/40 flex-1 timeline-step-gap">
+              <h3 class="font-serif text-forest text-lg sm:text-xl mb-2">Записываю аудио</h3>
               <p class="font-sans font-light text-forest/65 text-sm leading-relaxed">Голосом и с музыкой — так, чтобы это было глубоко и трансформационно.</p>
             </div>
           </div>
-          <div class="flex gap-8 items-start">
+          <div class="flex gap-6 sm:gap-8 items-start">
             <div class="flex-shrink-0 w-10 h-10 rounded-full bg-forest flex items-center justify-center text-gold font-serif font-semibold text-sm z-10 relative shadow-md border border-gold/40">5</div>
             <div class="pt-1 flex-1">
-              <h3 class="font-serif text-forest text-xl mb-2">Ты получаешь свою практику</h3>
+              <h3 class="font-serif text-forest text-lg sm:text-xl mb-2">Ты получаешь свою практику</h3>
               <p class="font-sans font-light text-forest/65 text-sm leading-relaxed">И можешь слушать её снова и снова — как личное письмо.</p>
             </div>
           </div>
         </div>
       </div>
-      <div class="mt-10 text-center">
-        <div class="inline-block border border-gold/40 rounded-2xl px-8 py-4" style="background:rgba(201,164,92,0.1)">
-          <p class="font-serif italic text-forest text-lg">«Обычно создание занимает от 3 до 7 дней»</p>
+      <div class="mt-8 text-center">
+        <div class="inline-block border border-gold/40 rounded-2xl px-6 sm:px-8 py-4" style="background:rgba(201,164,92,0.1)">
+          <p class="font-serif italic text-forest text-base sm:text-lg">«Обычно создание занимает от 3 до 7 дней»</p>
         </div>
       </div>
     </div>
@@ -683,48 +711,59 @@
 </section>
 
 <!-- ===================== REVIEWS ===================== -->
-<section id="reviews" class="relative py-24 px-4">
+<section id="reviews" class="relative py-20">
   <div class="max-w-6xl mx-auto">
-    <div class="text-center mb-14 reveal">
-      <div class="divider mb-8"></div>
-      <h2 class="font-serif font-light text-cream text-4xl lg:text-5xl drop-shadow-lg">
+    <div class="text-center mb-10 px-4 reveal">
+      <div class="divider mb-7"></div>
+      <h2 class="font-serif font-light text-cream text-3xl sm:text-4xl lg:text-5xl drop-shadow-lg">
         Как это проживают<br/><em class="text-gold">другие женщины</em>
       </h2>
-      <p class="font-sans font-light text-cream/75 text-base leading-relaxed mt-5 max-w-2xl mx-auto">
-        Три самых сильных и визуально чистых отзыва после прослушивания медитаций и сказок.
+      <!-- Mobile swipe hint -->
+      <p class="md:hidden font-sans font-light text-cream/55 text-sm mt-4">
+        ← листай, чтобы увидеть все отзывы →
       </p>
     </div>
 
-    <div class="reviews-row reveal">
-      <article class="flex flex-col items-center gap-4">
+    <!-- Mobile: horizontal scroll / Desktop: 3-col grid -->
+    <div class="reviews-scroll-wrap reveal">
+
+      <article class="review-card">
         <div class="phone-frame">
           <div class="review-window">
-            <img src="assets/review-1.png" alt="Отзыв: это просто волшебство" />
+            <img src="assets/review-1.png" alt="Отзыв: это просто волшебство" draggable="false"/>
           </div>
         </div>
-        <p class="review-caption font-serif italic text-cream text-lg text-center drop-shadow">«Это просто волшебство»</p>
+        <p class="review-caption font-serif italic text-cream drop-shadow">«Это просто волшебство»</p>
       </article>
 
-      <article class="flex flex-col items-center gap-4">
+      <article class="review-card">
         <div class="phone-frame">
           <div class="review-window">
-            <img src="assets/review-2.png" alt="Отзыв: ты попала в самую суть" />
+            <img src="assets/review-2.png" alt="Отзыв: ты попала в самую суть" draggable="false"/>
           </div>
         </div>
-        <p class="review-caption font-serif italic text-cream text-lg text-center drop-shadow">«Ты попала в самую суть»</p>
+        <p class="review-caption font-serif italic text-cream drop-shadow">«Ты попала в самую суть»</p>
       </article>
 
-      <article class="flex flex-col items-center gap-4">
+      <article class="review-card">
         <div class="phone-frame">
           <div class="review-window">
-            <img src="assets/review-3.png" alt="Отзыв: как будто меня кто-то обнимает" />
+            <img src="assets/review-3.png" alt="Отзыв: как будто меня кто-то обнимает" draggable="false"/>
           </div>
         </div>
-        <p class="review-caption font-serif italic text-cream text-lg text-center drop-shadow">«Как будто меня кто-то обнимает»</p>
+        <p class="review-caption font-serif italic text-cream drop-shadow">«Как будто меня кто-то обнимает»</p>
       </article>
+
     </div>
 
-    <div class="text-center mt-14 reveal">
+    <!-- Dot indicators (mobile only) -->
+    <div class="scroll-dots mt-2 md:hidden" id="scroll-dots">
+      <div class="scroll-dot active" data-idx="0"></div>
+      <div class="scroll-dot" data-idx="1"></div>
+      <div class="scroll-dot" data-idx="2"></div>
+    </div>
+
+    <div class="text-center mt-12 px-4 reveal">
       <a href="https://docs.google.com/forms/d/e/1FAIpQLSdoc5ghpCXFmpZeyU1r0sF1YUnmNtxGoTqiXsOxiKTeG8VSsQ/viewform?usp=header"
          target="_blank"
          class="btn-primary inline-block bg-gold text-forest font-sans font-medium px-10 py-4 rounded-full text-base shadow-xl">
@@ -734,14 +773,13 @@
   </div>
 </section>
 
-
 <!-- ===================== PAYMENT ===================== -->
-<section class="relative py-20 px-4">
+<section class="relative py-16 px-4">
   <div class="max-w-2xl mx-auto reveal">
-    <div class="glass rounded-3xl p-10 text-center shadow-xl border border-blush/30">
-      <div class="divider mb-8"></div>
-      <h2 class="font-serif font-light text-forest text-4xl mb-6">Как устроен обмен</h2>
-      <p class="font-sans font-light text-forest/75 text-lg leading-loose mb-8">
+    <div class="glass rounded-3xl p-8 sm:p-10 text-center shadow-xl border border-blush/30">
+      <div class="divider mb-7"></div>
+      <h2 class="font-serif font-light text-forest text-3xl sm:text-4xl mb-5">Как устроен обмен</h2>
+      <p class="font-sans font-light text-forest/75 text-base sm:text-lg leading-loose mb-7">
         Стоимость мы обсуждаем в личном разговоре — напиши мне в Telegram, и я расскажу подробнее. Для меня важно, чтобы обмен был живым, честным и бережным для обеих сторон.
       </p>
       <a href="https://t.me/NastiaTsv" target="_blank"
@@ -753,9 +791,9 @@
 </section>
 
 <!-- ===================== DISCLAIMER ===================== -->
-<section class="relative py-16 px-4">
+<section class="relative py-14 px-4">
   <div class="max-w-2xl mx-auto reveal">
-    <div class="glass rounded-2xl border border-gold/30 p-8 text-center shadow-lg">
+    <div class="glass rounded-2xl border border-gold/30 p-7 sm:p-8 text-center shadow-lg">
       <p class="text-gold text-xl mb-3">✦</p>
       <h3 class="font-serif text-forest text-xl mb-4">Важно сказать честно</h3>
       <p class="font-sans font-light text-forest/65 text-sm leading-loose">
@@ -766,57 +804,57 @@
 </section>
 
 <!-- ===================== FAQ ===================== -->
-<section id="faq" class="relative py-24 px-4">
+<section id="faq" class="relative py-20 px-4">
   <div class="max-w-2xl mx-auto">
-    <div class="text-center mb-14 reveal">
-      <div class="divider mb-8"></div>
-      <h2 class="font-serif font-light text-cream text-4xl lg:text-5xl drop-shadow-lg">
+    <div class="text-center mb-12 reveal">
+      <div class="divider mb-7"></div>
+      <h2 class="font-serif font-light text-cream text-3xl sm:text-4xl lg:text-5xl drop-shadow-lg">
         Вопросы, которые<br/><em class="text-gold">часто возникают</em>
       </h2>
     </div>
     <div class="space-y-3 reveal">
       <div class="faq-item glass rounded-2xl border border-blush/40 overflow-hidden shadow-md">
-        <button class="faq-trigger w-full flex items-center justify-between px-7 py-5 text-left" onclick="toggleFaq(this)">
-          <span class="font-serif text-forest text-lg">Можно ли выбрать и медитацию, и сказку?</span>
-          <svg class="faq-arrow w-5 h-5 text-rose flex-shrink-0 ml-4" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M5 7.5l5 5 5-5"/></svg>
+        <button class="faq-trigger w-full flex items-center justify-between px-5 sm:px-7 py-5 text-left gap-3" onclick="toggleFaq(this)">
+          <span class="font-serif text-forest text-base sm:text-lg">Можно ли выбрать и медитацию, и сказку?</span>
+          <svg class="faq-arrow w-5 h-5 text-rose flex-shrink-0" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M5 7.5l5 5 5-5"/></svg>
         </button>
-        <div class="faq-body px-7">
+        <div class="faq-body px-5 sm:px-7">
           <p class="font-sans font-light text-forest/65 text-sm leading-relaxed pb-5">Да, конечно. Можно выбрать один формат или оба — в зависимости от того, что тебе сейчас ближе и что больше откликается.</p>
         </div>
       </div>
       <div class="faq-item glass rounded-2xl border border-blush/40 overflow-hidden shadow-md">
-        <button class="faq-trigger w-full flex items-center justify-between px-7 py-5 text-left" onclick="toggleFaq(this)">
-          <span class="font-serif text-forest text-lg">Сколько времени займёт создание?</span>
-          <svg class="faq-arrow w-5 h-5 text-rose flex-shrink-0 ml-4" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M5 7.5l5 5 5-5"/></svg>
+        <button class="faq-trigger w-full flex items-center justify-between px-5 sm:px-7 py-5 text-left gap-3" onclick="toggleFaq(this)">
+          <span class="font-serif text-forest text-base sm:text-lg">Сколько времени займёт создание?</span>
+          <svg class="faq-arrow w-5 h-5 text-rose flex-shrink-0" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M5 7.5l5 5 5-5"/></svg>
         </button>
-        <div class="faq-body px-7">
+        <div class="faq-body px-5 sm:px-7">
           <p class="font-sans font-light text-forest/65 text-sm leading-relaxed pb-5">Обычно от 3 до 7 дней после заполнения анкеты. Я напишу тебе, как только практика будет готова.</p>
         </div>
       </div>
       <div class="faq-item glass rounded-2xl border border-blush/40 overflow-hidden shadow-md">
-        <button class="faq-trigger w-full flex items-center justify-between px-7 py-5 text-left" onclick="toggleFaq(this)">
-          <span class="font-serif text-forest text-lg">Можно ли отвечать голосом?</span>
-          <svg class="faq-arrow w-5 h-5 text-rose flex-shrink-0 ml-4" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M5 7.5l5 5 5-5"/></svg>
+        <button class="faq-trigger w-full flex items-center justify-between px-5 sm:px-7 py-5 text-left gap-3" onclick="toggleFaq(this)">
+          <span class="font-serif text-forest text-base sm:text-lg">Можно ли отвечать голосом?</span>
+          <svg class="faq-arrow w-5 h-5 text-rose flex-shrink-0" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M5 7.5l5 5 5-5"/></svg>
         </button>
-        <div class="faq-body px-7">
+        <div class="faq-body px-5 sm:px-7">
           <p class="font-sans font-light text-forest/65 text-sm leading-relaxed pb-5">Да, если так тебе живее и проще — голосовые или видеосообщения приветствуются.</p>
         </div>
       </div>
       <div class="faq-item glass rounded-2xl border border-blush/40 overflow-hidden shadow-md">
-        <button class="faq-trigger w-full flex items-center justify-between px-7 py-5 text-left" onclick="toggleFaq(this)">
-          <span class="font-serif text-forest text-lg">Что делать после прослушивания?</span>
-          <svg class="faq-arrow w-5 h-5 text-rose flex-shrink-0 ml-4" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M5 7.5l5 5 5-5"/></svg>
+        <button class="faq-trigger w-full flex items-center justify-between px-5 sm:px-7 py-5 text-left gap-3" onclick="toggleFaq(this)">
+          <span class="font-serif text-forest text-base sm:text-lg">Что делать после прослушивания?</span>
+          <svg class="faq-arrow w-5 h-5 text-rose flex-shrink-0" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M5 7.5l5 5 5-5"/></svg>
         </button>
-        <div class="faq-body px-7">
+        <div class="faq-body px-5 sm:px-7">
           <p class="font-sans font-light text-forest/65 text-sm leading-relaxed pb-5">Можешь написать мне в Telegram — поделиться ощущениями, задать вопрос. Я отвечу голосовым сообщением и буду рядом.</p>
         </div>
       </div>
       <div class="faq-item glass rounded-2xl border border-blush/40 overflow-hidden shadow-md">
-        <button class="faq-trigger w-full flex items-center justify-between px-7 py-5 text-left" onclick="toggleFaq(this)">
-          <span class="font-serif text-forest text-lg">Это будет универсальная медитация?</span>
-          <svg class="faq-arrow w-5 h-5 text-rose flex-shrink-0 ml-4" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M5 7.5l5 5 5-5"/></svg>
+        <button class="faq-trigger w-full flex items-center justify-between px-5 sm:px-7 py-5 text-left gap-3" onclick="toggleFaq(this)">
+          <span class="font-serif text-forest text-base sm:text-lg">Это будет универсальная медитация?</span>
+          <svg class="faq-arrow w-5 h-5 text-rose flex-shrink-0" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M5 7.5l5 5 5-5"/></svg>
         </button>
-        <div class="faq-body px-7">
+        <div class="faq-body px-5 sm:px-7">
           <p class="font-sans font-light text-forest/65 text-sm leading-relaxed pb-5">Нет. Я не использую шаблоны. Каждая практика создаётся один раз — только для тебя, только из твоего запроса.</p>
         </div>
       </div>
@@ -825,17 +863,17 @@
 </section>
 
 <!-- ===================== FINAL CTA ===================== -->
-<section class="relative py-28 px-4 overflow-hidden">
-  <div class="glass-dark rounded-3xl max-w-2xl mx-auto px-8 py-16 text-center shadow-2xl border border-gold/20 reveal">
-    <div class="w-10 h-px bg-gold mx-auto mb-10"></div>
-    <h2 class="font-serif font-light text-cream text-4xl lg:text-5xl mb-6 leading-tight">
+<section class="relative py-20 px-4">
+  <div class="glass-dark rounded-3xl max-w-2xl mx-auto px-6 sm:px-10 py-14 sm:py-16 text-center shadow-2xl border border-gold/20 reveal">
+    <div class="w-10 h-px bg-gold mx-auto mb-8"></div>
+    <h2 class="font-serif font-light text-cream text-3xl sm:text-4xl lg:text-5xl mb-6 leading-tight">
       Если чувствуешь отклик —<br/><em class="text-gold">приходи</em>
     </h2>
-    <p class="font-sans font-light text-cream/75 text-lg leading-loose mb-10">
+    <p class="font-sans font-light text-cream/75 text-base sm:text-lg leading-loose mb-8">
       Заполни анкету в своём темпе. Без спешки, без правильных ответов.<br/>
       Пусть это уже станет первым мягким шагом к себе.
     </p>
-    <div class="flex flex-col sm:flex-row gap-4 justify-center mb-12">
+    <div class="flex flex-col sm:flex-row gap-4 justify-center mb-10">
       <a href="https://docs.google.com/forms/d/e/1FAIpQLSdoc5ghpCXFmpZeyU1r0sF1YUnmNtxGoTqiXsOxiKTeG8VSsQ/viewform?usp=header"
          target="_blank"
          class="btn-primary bg-gold text-forest font-sans font-medium px-10 py-4 rounded-full text-base shadow-lg">Заполнить анкету</a>
@@ -843,12 +881,12 @@
          class="btn-secondary border border-cream/40 text-cream font-sans font-light px-10 py-4 rounded-full text-base">Написать в Telegram</a>
     </div>
     <p class="font-serif italic text-cream/60 text-lg">Обнимаю Душой. <span class="text-gold not-italic">Анастасия Цветкова</span></p>
-    <div class="w-10 h-px bg-gold mx-auto mt-10"></div>
+    <div class="w-10 h-px bg-gold mx-auto mt-8"></div>
   </div>
 </section>
 
 <!-- ===================== FOOTER ===================== -->
-<footer class="glass-dark border-t border-gold/15 py-12 px-4">
+<footer class="glass-dark border-t border-gold/15 py-10 px-4">
   <div class="max-w-4xl mx-auto flex flex-col md:flex-row items-center justify-between gap-6 text-center md:text-left">
     <div>
       <div class="font-serif text-cream text-xl mb-1">LightSoulTalk</div>
@@ -860,20 +898,19 @@
        target="_blank"
        class="btn-primary bg-gold text-forest font-sans font-medium px-8 py-3 rounded-full text-sm shadow-lg">Заполнить анкету</a>
   </div>
-  <div class="text-center mt-8">
+  <div class="text-center mt-7">
     <p class="font-sans text-xs text-cream/25 font-light">© 2026 LightSoulTalk · Анастасия Цветкова</p>
   </div>
 </footer>
 
 <script>
-  // Scroll reveal
-  const revealEls = document.querySelectorAll('.reveal');
+  // ── Scroll reveal ──
   const obs = new IntersectionObserver((entries) => {
     entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('visible'); obs.unobserve(e.target); } });
-  }, { threshold: 0.12 });
-  revealEls.forEach(el => obs.observe(el));
+  }, { threshold: 0.1 });
+  document.querySelectorAll('.reveal').forEach(el => obs.observe(el));
 
-  // FAQ
+  // ── FAQ ──
   function toggleFaq(btn) {
     const body = btn.nextElementSibling;
     const arrow = btn.querySelector('.faq-arrow');
@@ -883,13 +920,14 @@
     if (!isOpen) { body.classList.add('open'); arrow.classList.add('open'); }
   }
 
-  // Audio
+  // ── Audio player ──
   const audio = document.getElementById('meditation-audio');
   const progressEl = document.getElementById('progress');
   const timeCurrent = document.getElementById('time-current');
   const timeTotal = document.getElementById('time-total');
   const iconPlay = document.getElementById('icon-play');
   const iconPause = document.getElementById('icon-pause');
+
   function formatTime(s) { const m = Math.floor(s/60), sec = Math.floor(s%60); return m+':'+(sec<10?'0':'')+sec; }
   function togglePlay() {
     if (audio.paused) { audio.play(); iconPlay.classList.add('hidden'); iconPause.classList.remove('hidden'); }
@@ -907,6 +945,37 @@
     iconPlay.classList.remove('hidden'); iconPause.classList.add('hidden');
     progressEl.value = 0; timeCurrent.textContent = '0:00';
     progressEl.style.background = 'linear-gradient(to right, #C9A45C 0%, rgba(230,209,202,0.5) 0%)';
+  });
+
+  // ── Review scroll dots (mobile) ──
+  const scrollWrap = document.querySelector('.reviews-scroll-wrap');
+  const dots = document.querySelectorAll('.scroll-dot');
+  const cards = document.querySelectorAll('.review-card');
+
+  if (scrollWrap && dots.length) {
+    scrollWrap.addEventListener('scroll', () => {
+      const scrollLeft = scrollWrap.scrollLeft;
+      const cardWidth = scrollWrap.scrollWidth / cards.length;
+      const activeIdx = Math.round(scrollLeft / cardWidth);
+      dots.forEach((d, i) => d.classList.toggle('active', i === activeIdx));
+    }, { passive: true });
+
+    // Tap on dot → scroll to card
+    dots.forEach(dot => {
+      dot.addEventListener('click', () => {
+        const idx = parseInt(dot.dataset.idx);
+        const cardWidth = scrollWrap.scrollWidth / cards.length;
+        scrollWrap.scrollTo({ left: cardWidth * idx, behavior: 'smooth' });
+      });
+    });
+  }
+
+  // ── Prevent page scroll when finger is inside review-window ──
+  // (Already handled by CSS overscroll-behavior-y: contain,
+  //  but this JS guard covers older browsers)
+  document.querySelectorAll('.review-window').forEach(win => {
+    win.addEventListener('touchstart', e => { e.stopPropagation(); }, { passive: true });
+    win.addEventListener('touchmove', e => { e.stopPropagation(); }, { passive: true });
   });
 </script>
 </body>
